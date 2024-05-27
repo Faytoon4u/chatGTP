@@ -4,49 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rickroll Page</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: url('image.png') repeat;
-        }
-
-        header, footer {
-            background-color: #333;
+        .button {
+            background-color: orange;
             color: white;
-            text-align: center;
-            padding: 1em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-right: 10px; /* Added margin to separate buttons */
         }
 
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2em;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        p {
-            font-size: 24px;
-            color: red;
-            font-weight: bold;
-            text-transform: uppercase;
+        .button:hover {
+            background-color: white;
+            color: orange;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Rickroll Page</h1>
+        <a href="page2.html" class="button">Video</a>
+        <a href="page3.html" class="button">Tekst</a> <!-- Added button for page3.html -->
     </header>
     <main>
         <div class="content">
@@ -58,3 +39,4 @@
     </footer>
 </body>
 </html>
+

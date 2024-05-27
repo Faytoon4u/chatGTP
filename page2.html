@@ -5,14 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extra Page</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .button {
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-right: 10px; /* Added margin to separate buttons */
+        }
+
+        .button:hover {
+            background-color: white;
+            color: orange;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Extra Page</h1>
+        <a href="page2.html" class="button">Extra Page</a>
+        <a href="page3.html" class="button">Page 3</a> <!-- Added button for page3.html -->
     </header>
     <main>
         <div class="content">
-            <p>Watch the video carefully below:</p>
+            <p>Watch the video below:</p>
             <div class="video-container">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/hvL1339luv0?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
