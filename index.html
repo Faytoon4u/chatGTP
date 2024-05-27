@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website with Animations</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .button {
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button:hover {
+            background-color: white;
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+        <a href="page2.html" class="button">Extra Page</a>
+    </header>
+    <main>
+        <div class="content">
+            <img src="sample.jpg" alt="Sample Image" class="fade-in">
+            <p>This is a simple website with a basic fade-in animation using HTML, CSS, and JavaScript.</p>
+            <p><a href="page2.html">Go to the extra page</a></p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+    <script src="ja.js"></script>
+</body>
+</html>
