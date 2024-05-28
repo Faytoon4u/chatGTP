@@ -27,12 +27,9 @@
         }
 
         .feedback-image {
-            width: 60%;
-            height: 60%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999;
+            width: 300px; /* Set a larger width for the feedback image */
+            height: auto;
+            cursor: pointer;
         }
 
         .disabled {
@@ -45,24 +42,12 @@
         }
 
         .animate-out {
-            animation: moveOut 0.5s forwards;
+            animation: moveOut 1s forwards;
         }
 
         @keyframes moveOut {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(100px, -100px);
-            }
-            50% {
-                transform: translate(-100px, 100px);
-            }
-            75% {
-                transform: translate(100px, 100px);
-            }
-            100% {
-                transform: translate(-100px, -100px);
+            to {
+                transform: translateX(1000px);
                 opacity: 0;
             }
         }
@@ -145,21 +130,21 @@
             const submitButton = document.getElementById('submit-button');
             const answers = document.querySelectorAll('.answer');
 
-            // Apply animations to each answer element
-            answers.forEach((answer, index) => {
-                answer.classList.add('animate-out');
-            });
+            answers.forEach(answer => answer.classList.add('animate-out'));
 
             if (selectedAnswer) {
-                feedbackImage.src = selectedAnswer.value === correctAnswer ? "correct.png" : "incorrect.png";
+                if (selectedAnswer.value === correctAnswer) {
+                    feedbackImage.src = "correct.png"; // Path to the correct answer image in PNG format
+                    alert("Correct!");
+                } else {
+                    feedbackImage.src = "incorrect.png"; // Path to the incorrect answer image in PNG format
+                    alert("Incorrect! Try again.");
+                }
                 feedbackDiv.classList.remove('hidden');
-                disableButton(submitButton, 10000);
-                makeFeedbackClickable(feedbackImage, 10000);
+                disableButton(submitButton, 10000); // Disable button for 10 seconds
+                makeFeedbackClickable(feedbackImage, 10000); // Make feedback image clickable after 10 seconds
             } else {
-                feedbackImage.src = "incorrect.png";
-                feedbackDiv.classList.remove('hidden');
-                disableButton(submitButton, 10000);
-                makeFeedbackClickable(feedbackImage, 10000);
+                alert("Please select an answer.");
             }
         }
 
@@ -183,4 +168,5 @@
     </script>
 </body>
 </html>
+
 
