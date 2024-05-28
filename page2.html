@@ -14,7 +14,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
-            margin-right: 10px; /* Added margin to separate buttons */
+            margin-right: 10px;
         }
 
         .button:hover {
@@ -24,6 +24,11 @@
 
         .hidden {
             display: none;
+        }
+
+        .feedback-image {
+            width: 100px;
+            height: auto;
         }
     </style>
 </head>
@@ -38,40 +43,73 @@
             <div id="video-container">
                 <p>Watch the video below:</p>
                 <div class="video-container">
-                    <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/hvL1339luv0?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div id="player"></div>
                 </div>
             </div>
             <div id="quiz-container" class="hidden">
                 <h2>Quiz</h2>
-                <p>What year was "Never Gonna Give You Up" released?</p>
-                <input type="radio" id="1985" name="year" value="1985">
-                <label for="1985">1985</label><br>
-                <input type="radio" id="1987" name="year" value="1987">
-                <label for="1987">1987</label><br>
-                <input type="radio" id="1989" name="year" value="1989">
-                <label for="1989">1989</label><br>
+                <p>How many times did the cat "miauw"?</p>
+                <input type="radio" id="option1" name="cat" value="2">
+                <label for="option1">2. 100</label><br>
+                <input type="radio" id="option2" name="cat" value="76">
+                <label for="option2">2. 76</label><br>
+                <input type="radio" id="option3" name="cat" value="69">
+                <label for="option3">69</label><br>
+                <input type="radio" id="option4" name="cat" value="umm i did not count">
+                <label for="option4">umm i did not count</label><br>
                 <button onclick="checkAnswer()">Submit</button>
+                <div id="feedback" class="hidden">
+                    <img id="feedback-image" class="feedback-image" src="" alt="">
+                </div>
             </div>
         </div>
     </main>
     <footer>
         <p>&copy; 2024 My Website</p>
     </footer>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Check when the video ends
-        document.getElementById('video').addEventListener('ended', function() {
-            document.getElementById('video-container').classList.add('hidden');
-            document.getElementById('quiz-container').classList.remove('hidden');
-        });
+        var player;
 
-        // Check the quiz answer
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '315',
+                width: '560',
+                videoId: 'hvL1339luv0',
+                events: {
+                    'onStateChange': onPlayerStateChange
+                },
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 1
+                }
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                document.getElementById('video-container').classList.add('hidden');
+                document.getElementById('quiz-container').classList.remove('hidden');
+            }
+        }
+
         function checkAnswer() {
-            const correctAnswer = "1987";
-            const selectedAnswer = document.querySelector('input[name="year"]:checked');
-            if (selectedAnswer && selectedAnswer.value === correctAnswer) {
-                alert("Correct!");
+            const correctAnswer = "umm i did not count";
+            const selectedAnswer = document.querySelector('input[name="cat"]:checked');
+            const feedbackDiv = document.getElementById('feedback');
+            const feedbackImage = document.getElementById('feedback-image');
+
+            if (selectedAnswer) {
+                if (selectedAnswer.value === correctAnswer) {
+                    alert("Correct!");
+                    feedbackImage.src = "correct.jpg"; // Path to the correct answer image
+                } else {
+                    alert("Incorrect! Try again.");
+                    feedbackImage.src = "incorrect.jpg"; // Path to the incorrect answer image
+                }
+                feedbackDiv.classList.remove('hidden');
             } else {
-                alert("Incorrect! Try again.");
+                alert("Please select an answer.");
             }
         }
     </script>
