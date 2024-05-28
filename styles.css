@@ -48,30 +48,4 @@ img {
 }
 
 
-@keyframes moveOut1 {
-    to {
-        transform: translateX(-500px);
-        opacity: 0;
-    }
-}
 
-@keyframes moveOut2 {
-    to {
-        transform: translateX(500px);
-        opacity: 0;
-    }
-}
-
-@keyframes moveOut3 {
-    to {
-        transform: translateY(-500px);
-        opacity: 0;
-    }
-}
-
-@keyframes moveOut4 {
-    to {
-        transform: translateY(500px);
-        opacity: 0;
-    }
-}
