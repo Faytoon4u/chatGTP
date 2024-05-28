@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extra Page</title>
+    <title>Video Page</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         .button {
@@ -21,25 +21,60 @@
             background-color: white;
             color: orange;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Extra Page</h1>
-        <a href="page2.html" class="button">Extra Page</a>
-        <a href="page3.html" class="button">Page 3</a> <!-- Added button for page3.html -->
+        <h1>Video Page</h1>
+        <a href="page2.html" class="button">Video</a>
+        <a href="page3.html" class="button">Tekst</a>
     </header>
     <main>
         <div class="content">
-            <p>Watch the video below:</p>
-            <div class="video-container">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/hvL1339luv0?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div id="video-container">
+                <p>Watch the video below:</p>
+                <div class="video-container">
+                    <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/hvL1339luv0?autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div id="quiz-container" class="hidden">
+                <h2>Quiz</h2>
+                <p>What year was "Never Gonna Give You Up" released?</p>
+                <input type="radio" id="1985" name="year" value="1985">
+                <label for="1985">1985</label><br>
+                <input type="radio" id="1987" name="year" value="1987">
+                <label for="1987">1987</label><br>
+                <input type="radio" id="1989" name="year" value="1989">
+                <label for="1989">1989</label><br>
+                <button onclick="checkAnswer()">Submit</button>
             </div>
         </div>
     </main>
     <footer>
-        <p>&copy; 2024 fays Website</p>
+        <p>&copy; 2024 My Website</p>
     </footer>
+    <script>
+        // Check when the video ends
+        document.getElementById('video').addEventListener('ended', function() {
+            document.getElementById('video-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+        });
+
+        // Check the quiz answer
+        function checkAnswer() {
+            const correctAnswer = "1987";
+            const selectedAnswer = document.querySelector('input[name="year"]:checked');
+            if (selectedAnswer && selectedAnswer.value === correctAnswer) {
+                alert("Correct!");
+            } else {
+                alert("Incorrect! Try again.");
+            }
+        }
+    </script>
 </body>
 </html>
 
