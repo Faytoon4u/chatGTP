@@ -50,9 +50,9 @@
                 <h2>Quiz</h2>
                 <p>How many times did the cat "miauw"?</p>
                 <input type="radio" id="option1" name="cat" value="2">
-                <label for="option1">2. 100</label><br>
+                <label for="option1">100</label><br>
                 <input type="radio" id="option2" name="cat" value="76">
-                <label for="option2">2. 76</label><br>
+                <label for="option2">76</label><br>
                 <input type="radio" id="option3" name="cat" value="69">
                 <label for="option3">69</label><br>
                 <input type="radio" id="option4" name="cat" value="umm i did not count">
@@ -101,11 +101,11 @@
 
             if (selectedAnswer) {
                 if (selectedAnswer.value === correctAnswer) {
+                    feedbackImage.src = "correct.png"; // Path to the correct answer image
                     alert("Correct!");
-                    feedbackImage.src = "correct.jpg"; // Path to the correct answer image
                 } else {
+                    feedbackImage.src = "incorrect.png"; // Path to the incorrect answer image
                     alert("Incorrect! Try again.");
-                    feedbackImage.src = "incorrect.jpg"; // Path to the incorrect answer image
                 }
                 feedbackDiv.classList.remove('hidden');
             } else {
