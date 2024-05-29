@@ -27,7 +27,7 @@
         }
 
         .feedback-image {
-            width: 300px; /* Set a larger width for the feedback image */
+            width: 500px;
             height: auto;
             cursor: pointer;
         }
@@ -51,6 +51,19 @@
                 opacity: 0;
             }
         }
+
+        /* Center the feedback image */
+        #feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .answer {
+            position: absolute;
+        }
     </style>
 </head>
 <body>
@@ -58,6 +71,7 @@
         <h1>Video Page</h1>
         <a href="page2.html" class="button">Video</a>
         <a href="page3.html" class="button">Tekst</a>
+        <button onclick="resetVideo()" class="button">Reset Video</button>
     </header>
     <main>
         <div class="content">
@@ -72,11 +86,11 @@
                 <p>How many times did the cat "miauw"?</p>
                 <div class="answer" id="answer1">
                     <input type="radio" id="option1" name="cat" value="2">
-                    <label for="option1">2. 100</label>
+                    <label for="option1">100</label>
                 </div>
                 <div class="answer" id="answer2">
                     <input type="radio" id="option2" name="cat" value="76">
-                    <label for="option2">2. 76</label>
+                    <label for="option2">76</label>
                 </div>
                 <div class="answer" id="answer3">
                     <input type="radio" id="option3" name="cat" value="69">
@@ -84,11 +98,11 @@
                 </div>
                 <div class="answer" id="answer4">
                     <input type="radio" id="option4" name="cat" value="umm i did not count">
-                    <label for="option4">umm i did not count</label>
+                    <label for="option4">I did not count</label>
                 </div>
                 <button id="submit-button" onclick="checkAnswer()">Submit</button>
                 <div id="feedback" class="hidden">
-                    <img id="feedback-image" class="feedback-image unclickable" src="" alt="">
+                    <img id="feedback-image" class="feedback-image" src="" alt="">
                 </div>
             </div>
         </div>
@@ -119,6 +133,7 @@
             if (event.data === YT.PlayerState.ENDED) {
                 document.getElementById('video-container').classList.add('hidden');
                 document.getElementById('quiz-container').classList.remove('hidden');
+                startMovingAnswers(); // Start moving answers when video ends
             }
         }
 
@@ -135,38 +150,33 @@
             if (selectedAnswer) {
                 if (selectedAnswer.value === correctAnswer) {
                     feedbackImage.src = "correct.png"; // Path to the correct answer image in PNG format
-                    alert("Correct!");
                 } else {
                     feedbackImage.src = "incorrect.png"; // Path to the incorrect answer image in PNG format
-                    alert("Incorrect! Try again.");
                 }
                 feedbackDiv.classList.remove('hidden');
-                disableButton(submitButton, 10000); // Disable button for 10 seconds
-                makeFeedbackClickable(feedbackImage, 10000); // Make feedback image clickable after 10 seconds
+
+                // Hide the feedback image after 5 seconds
+                setTimeout(() => {
+                    feedbackDiv.classList.add('hidden');
+                }, 5000); // 5 seconds
             } else {
                 alert("Please select an answer.");
             }
         }
 
-        function disableButton(button, duration) {
-            button.disabled = true;
-            button.classList.add('disabled');
-            setTimeout(() => {
-                button.disabled = false;
-                button.classList.remove('disabled');
-            }, duration);
+        function resetVideo() {
+            location.reload(); // Reload the page to reset the video
         }
 
-        function makeFeedbackClickable(feedbackImage, duration) {
-            setTimeout(() => {
-                feedbackImage.classList.remove('unclickable');
-                feedbackImage.addEventListener('click', () => {
-                    feedbackImage.parentElement.classList.add('hidden');
+        function startMovingAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            setInterval(() => {
+                answers.forEach(answer => {
+                    answer.style.top = Math.random() * 80 + 'vh';
+                    answer.style.left = Math.random() * 80 + 'vw';
                 });
-            }, duration);
+            }, 1000); // Move answers every second
         }
     </script>
 </body>
 </html>
-
-
