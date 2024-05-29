@@ -22,7 +22,13 @@
             color: orange;
         }
 
-        /* Custom styles for rainbow text */
+        /* Custom styles for rainbow text with animation */
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .rainbow-text {
             font-size: 24px;
             font-weight: bold;
@@ -31,10 +37,27 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            background-size: 400% 400%; /* Adjusted to make the animation smooth */
+            animation: rainbow 1s linear infinite;
+        }
+
+        /* Epileptic warning style */
+        .warning {
+            background-color: yellow;
+            color: red;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid red;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+    <div class="warning">
+        Warning: This page contains rapidly changing colors. Viewer discretion is advised.
+    </div>
     <header>
         <h1>Rickroll Page</h1>
         <a href="page2.html" class="button">Video</a>
@@ -42,9 +65,9 @@
     </header>
     <main>
         <div class="content">
-            <!-- Text with rainbow colors -->
+            <!-- Text with animated rainbow colors -->
             <h1 class="rainbow-text">help what is rickroll</h1>
-            <p class="rainbow-text">"Rickrolling" is an internet meme that involves surprising viewers with a link to Rick Astley's music video for his 1987 song "Never Gonna Give You Up." The term "rickroll" originated from an early 2000s internet prank in which a user would disguise a hyperlink to something seemingly relevant or interesting but would actually lead to the music video of "Never Gonna Give You Up."</p>
+            <p class="rainbow-text">"Rickrolling" is an internet meme that involves surprising viewers with a link to Rick Astley's music video for his 1987 song "Never Gonna Give You Up." The term "rickroll" originated from an early 2000s internet prank in which a
             <p class="rainbow-text">The phenomenon gained significant popularity on various online platforms, including forums, social media, and video-sharing sites like YouTube. Users would trick others into clicking the link by promising exciting content or relevant information, only to redirect them to the music video instead. This unexpected redirection became a form of internet humor and prank culture.</p>
             <p class="rainbow-text">The music video itself features Rick Astley singing and dancing, often accompanied by vibrant visuals characteristic of the late 1980s. Despite its original release being decades ago, "Never Gonna Give You Up" experienced a resurgence in popularity due to the rickrolling meme. The song's catchy melody and Astley's distinctive voice contributed to its enduring appeal and widespread recognition.</p>
             <p class="rainbow-text">Rickrolling has transcended its internet origins and has been incorporated into various contexts, including mainstream media, advertising campaigns, and even real-life events. The meme continues to evolve and adapt, showcasing the enduring creativity and humor of internet culture.</p>
