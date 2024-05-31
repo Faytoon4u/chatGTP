@@ -21,7 +21,7 @@ main {
     justify-content: center;
     align-items: center;
     padding: 2em;
-    background-color: rgba(255, 255, 255, 0.8); /* Added for readability */
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .content {
@@ -65,9 +65,5 @@ img {
         transform: translate(-100px, -100px);
         opacity: 0;
     }
-}
-
-.animate-out {
-    animation: moveOut 0.5s forwards;
 }
 

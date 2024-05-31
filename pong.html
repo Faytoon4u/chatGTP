@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f1f1f1;
+            margin: 0;
+        }
+
+        header {
+            background-color: #333333;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 2px -2px gray;
+        }
+
+        .button {
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            margin-right: 10px; /* Added margin to separate buttons */
+        }
+
+        .button:hover {
+            background-color: white;
+            color: orange;
+        }
+
+        canvas {
+            background-color: #000;
+            display: block;
+        }
+
+        #win-message {
+            display: none;
+            text-align: center;
+        }
+
+        #win-message img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        
+        main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pong Game</h1>
+        <a href="index.html" class="button">Home</a>
+    </header>
+
+    <canvas id="pongCanvas" width="800" height="600"></canvas>
+    <div id="win-message">
+        <h1 id="win-text"></h1>
+        <img id="win-image" src="" alt="Win Image">
+    </div>
+    <script>
+        const canvas = document.getElementById('pongCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const ballRadius = 20;
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        let ballSpeedX = 4;
+        let ballSpeedY = 4;
+        const paddleHeight = 100;
+        const paddleWidth = 10;
+        let playerPaddleY = (canvas.height - paddleHeight) / 2;
+        let aiPaddleY = (canvas.height - paddleHeight) / 2;
+        let playerScore = 0;
+        let aiScore = 0;
+        const winningScore = 3;
+        const img = new Image();
+        img.src = 'rick.jpeg'; // Ensure the image is available at this path
+
+        canvas.addEventListener('mousemove', (evt) => {
+            const rect = canvas.getBoundingClientRect();
+            const root = document.documentElement;
+            const mouseY = evt.clientY - rect.top - root.scrollTop;
+            playerPaddleY = mouseY - (paddleHeight / 2);
+        });
+
+        function drawNet() {
+            for (let i = 0; i < canvas.height; i += 40) {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(canvas.width / 2 - 1, i, 2, 20);
+            }
+        }
+
+        function drawPaddle(x, y) {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(x, y, paddleWidth, paddleHeight);
+        }
+
+        function drawBall() {
+            ctx.drawImage(img, ballX - ballRadius, ballY - ballRadius, ballRadius * 2, ballRadius * 2);
+        }
+
+        function moveBall() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+
+            if (ballX - ballRadius < paddleWidth) {
+                if (ballY > playerPaddleY && ballY < playerPaddleY + paddleHeight) {
+                    ballSpeedX = -ballSpeedX;
+                } else if (ballX - ballRadius < 0) {
+                    aiScore++;
+                    if (aiScore >= winningScore) {
+                        endGame('You Lose!', 'verloren.png'); // Ensure the image is available at this path
+                    } else {
+                        resetBall();
+                    }
+                }
+            }
+
+            if (ballX + ballRadius > canvas.width - paddleWidth) {
+                if (ballY > aiPaddleY && ballY < aiPaddleY + paddleHeight) {
+                    ballSpeedX = -ballSpeedX;
+                } else if (ballX + ballRadius > canvas.width) {
+                    playerScore++;
+                    if (playerScore >= winningScore) {
+                        endGame('You Win!', 'gewonnen.png'); // Ensure the image is available at this path
+                    } else {
+                        resetBall();
+                    }
+                }
+            }
+        }
+
+        function moveAI() {
+            const aiPaddleCenter = aiPaddleY + (paddleHeight / 2);
+            if (aiPaddleCenter < ballY - 35) {
+                aiPaddleY += 6;
+            } else if (aiPaddleCenter > ballY + 35) {
+                aiPaddleY -= 6;
+            }
+        }
+
+        function resetBall() {
+            ballX = canvas.width / 2;
+            ballY = canvas.height / 2;
+            ballSpeedX = -ballSpeedX;
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawNet();
+            drawPaddle(0, playerPaddleY);
+            drawPaddle(canvas.width - paddleWidth, aiPaddleY);
+            drawBall();
+            moveBall();
+            moveAI();
+            drawScores();
+        }
+
+        function drawScores() {
+            ctx.font = "32px Arial";
+            ctx.fillStyle = "white";
+            ctx.fillText(playerScore, canvas.width / 4, 50);
+            ctx.fillText(aiScore, 3 * canvas.width / 4, 50);
+        }
+
+        function endGame(message, imagePath) {
+            const winMessage = document.getElementById('win-message');
+            const winText = document.getElementById('win-text');
+            const winImage = document.getElementById('win-image');
+
+            winText.textContent = message;
+            winImage.src = imagePath;
+
+            winMessage.style.display = 'block';
+            canvas.style.display = 'none';
+
+            setTimeout(() => {
+                window.location.href = 'index.html'; // Redirect to main screen after 3 seconds
+            }, 3000);
+        }
+
+        setInterval(draw, 1000 / 60);
+    </script>
+</body>
+<footer>
+    <p>&copy; 2024 My Website</p>
+</footer>
+</html>
